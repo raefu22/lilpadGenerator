@@ -137,9 +137,26 @@ def createLilypad():
         endn = 56
         faces = []
         for i in range(startn, endn + 1, 1):
-            #stri = (str)i
-            faces.append(appendName(name, '.f[' + str(i) + ']'))
+            faces.append(appendName(name, f'.f[{i}]'))
         
-        cmds.polyExtrudeFacet(faces, constructionHistory=1, keepFacesTogether=1, pvx=-5.466307211e-07, pvy=0.5, pvz=-4.263250638e-06, divisions=1, twist=0, taper=1, off=0, thickness=0, smoothingAngle=30)
-        #cmds.setAttr('polyExtrudeFace1.localTranslate', 0, 0, 0.868112, type=double3)
-        #cmds.scale(0.891931, 1, 0.891931, r=True, ocp=True)
+        cmds.polyExtrudeFacet(faces, constructionHistory=1, keepFacesTogether=1, pvx=-5.466307211e-07, pvy=0.5, pvz=-4.263250638e-06, divisions=1, twist=0, taper=1, off=0, thickness=0, smoothingAngle=30, n='polyExtrudeTop' + name)
+        cmds.setAttr(f'polyExtrudeTop{x}.localTranslate', 0, 0, 0.868112, type='double3')
+        cmds.scale(0.891931, 1, 0.891931, r=True, ocp=True)
+        
+        startn = 19
+        endn = 37
+        faces = []
+        for i in range(startn, endn + 1, 1):
+            faces.append(appendName(name, f'.f[{i}]'))
+        
+        cmds.polyExtrudeFacet(faces, constructionHistory=1, keepFacesTogether=1, pvx=-1.076369884e-06, pvy=23.2394006, pvz=-3.195326531e-06, divisions=1, twist=0, taper=1, off=0, thickness=0, smoothingAngle=30, n=f'polyExtrudeBottom{x}')
+ 
+        cmds.setAttr(f'polyExtrudeBottom{x}.localTranslate', 0, 0, 1.585827, type='double3')
+        cmds.scale(0.89392, 1, 0.89392, r=True, ocp=True)
+        
+        cmds.select(name + '.f[57]', name + '.f[79]', name + '.f[100]')
+        cmds.polyExtrudeFacet(constructionHistory=1, keepFacesTogether=1, pvx=13.57891116, pvy=0, pvz=48.61849756, divisions=1, twist=0, taper=1, off=0, thickness=0, smoothingAngle=30, n=f'polyExtrudeCutRight{x}')
+
+        cmds.setAttr(f'polyExtrudeCutRight{x}.localTranslate', 0, 0, 0.620065, type='double3')
+        cmds.scale(0.672788, 0.672788, 0.672788, r=True, ocp=True)
+        cmds.move(5.391176, 0, 0, r = True)
