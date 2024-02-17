@@ -164,15 +164,13 @@ def createLilypad():
         cmds.setAttr(f'polyExtrudeCutRight{x}.localTranslate', 0, 0, 0.620065, type='double3')
         cmds.scale(0.672788, 0.672788, 0.672788, r=True, ocp=True)
         cmds.move(5.391176, 0, 0, r = True)
-        cmds.select(name + '.f[58]', + name + '.f[60]', name + '.f[81]')
+        cmds.select(name + '.f[58]', name + '.f[60]', name + '.f[81]')
         node = cmds.polyExtrudeFacet(constructionHistory=1, keepFacesTogether=1, pvx=8.24462092, pvy=22.98021709, pvz=-1.670525561, divisions=1, twist=0, taper=1, off=0, thickness=0, smoothingAngle=0)
         cmds.rename(node, f'polyExtrudeCutLeft{x}')
-        cmds.setAttr(f'polyExtrudeCutLeft{x}.localTranslate', 0， 0， 0.785662， type='double3')
+        cmds.setAttr(f'polyExtrudeCutLeft{x}.localTranslate', 0, 0, 0.785662, type='double3')
         cmds.setAttr(f'polyExtrudeCutLeft{x}.localScale', 0.626892, 1, 1, type='double3')
-        
-        '''
-        cmds.move -r 3.012829 0 0 ;
-        move -r 0 0 -0.736701 ;
-        scale -r -p 11.404541cm 23.022894cm -1.634293cm 0.851077 1 1 ;
-        rotate -r -p 11.40517cm 23.022894cm -1.639525cm -os -fo 0 -4.675311 0 ;
-        '''
+        cmds.move(3.012829, 0, 0, r=True)
+        cmds.move(0, 0, -0.736701, r=True)
+        cmds.scale(0.851077, 1, 1, p=(11.404541, 23.022894, -1.634293))
+        cmds.rotate(0, -4.675311, 0, p=(11.40517, 23.022894, -1.639525), r=True, os=True, fo=True)
+      
