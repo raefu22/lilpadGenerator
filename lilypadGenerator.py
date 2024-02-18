@@ -25,7 +25,9 @@ nameparam = cmds.textFieldGrp(label = 'Name ')
 cmds.separator(height = 10)
 cmds.intSliderGrp("num", label="Number of Lilypads ", field = True, min = 1, max = 40, v = 15)
 cmds.separator(height = 10)
-
+cmds.intSliderGrp("size", label="Average Size ", field = True, min = 0.5, max = 15, v = 1)
+cmds.floatSliderGrp("sizestd", label="Size Standard Deviation ", field = True, min = 0.5, max = 8, v = 1)
+cmds.separator(height = 10)
 curveInstructions = cmds.text('                Select an EP Curve or Bezier Curve to place the lilypads along?')
 cmds.separator(height = 5)
 useCurve = cmds.checkBoxGrp('useCurve', numberOfCheckBoxes=1, label='Use Curve ', v1=False, onc = hideScatter, ofc = showScatter)
@@ -79,7 +81,7 @@ def normalDistrib(mean, std, size):
         numlist.append(random.uniform(otherupperlim, otherlowerlim))
     
     while (len(numlist) < size):
-        if (len(heightlist) == (size - 1)):
+        if (len(numlist) == (size - 1)):
             sum = 0
             for h in range(len(numlist)):
                 sum = sum + numlist[h]
@@ -106,9 +108,14 @@ def createLilypad():
     inputname = cmds.textFieldGrp(nameparam, query = True, text = True)
    
     num = cmds.intSliderGrp("num", q = True, v=True)
+    size = cmds.intSliderGrp("size", q = True, v=True)
+    sizestd = cmds.floatSliderGrp("sizestd", q = True, v=True)
+    sizeList = normalDistrib(size, sizestd, num)  
     spread = cmds.floatSliderGrp("spread", q = True, v = True)
     
     curvename = cmds.ls(selection = True)
+    
+    
     
     for x in range(1, num+1):
         #obj name
@@ -173,4 +180,6 @@ def createLilypad():
         cmds.move(0, 0, -0.736701, r=True)
         cmds.scale(0.851077, 1, 1, p=(11.404541, 23.022894, -1.634293))
         cmds.rotate(0, -4.675311, 0, p=(11.40517, 23.022894, -1.639525), r=True, os=True, fo=True)
-      
+        
+        cmds.select(name)
+        cmds.scale(sizeList[x-1], 1, sizeList[x-1], r=True)
